@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <link rel="stylesheet" href="Login.css">
+    <link rel="icon" type="image/png" href="Pngtree.jpg"/>
+    <title>Grabbi Login
+    </title>
+   
+</head>
+
+<body>
+        <h1>Grabbi</h1>
+        <img src="menu.png" alt="Logo">
+    
+   
+<div class="container">
+  <form>
+    <p>Login</p>
+    <div class="input-container">
+        <i class="fas fa-user" style="color: white;"></i>
+        <input type="text" placeholder="User ID" >
+    </div>
+
+    <div class="input-container">
+        <i class="fas fa-lock" style="color: white;"></i>
+        <input type="password" placeholder="Password" id="password">
+    </div>
+
+    <a href="#">Forgot Password or Username?</a><br>
+    <a href="UserSignUp.html">New Member? Sign up</a><br>
+    <input type="button" value="Sign in"><br>
+  </form>
+
+  <div class="drops">
+    <div class="drop drop-1"></div>
+    <div class="drop drop-2"></div>
+    <div class="drop drop-3"></div>
+    <div class="drop drop-4"></div>
+  </div>
+</div>
+
+<footer>
+    <p><a href="#">Go back to the Homepage</a></p>
+</footer>
+
+<script>
+    document.getElementById("password").addEventListener("focus", function() {
+        this.type = "text";
+    });
+
+    document.getElementById("password").addEventListener("blur", function() {
+        this.type = "password";
+    });
+</script>
+
+</body>
+</html>
