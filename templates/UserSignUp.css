@@ -1,0 +1,179 @@
+
+body {
+  /* background: linear-gradient(45deg, #FC466B, #3F5EFB);*/
+   background: url('pho anh vu yonge-finch.jpeg');
+   height: 200vh;
+   font-family: "Montserrat", sans-serif;
+ }
+
+ h1 {
+  color: white; 
+  font-size: 48px;
+  display: inline-block; 
+  vertical-align: middle;
+  margin-right: 5px; 
+}
+
+img {
+width: 40px; 
+height: 48px; 
+filter: brightness(0) invert(1); 
+vertical-align: middle; 
+}
+ 
+ .container {
+   position: absolute;
+   transform: translate(-50%, -50%);
+   top: 50%;
+   left: 50%;
+ }
+ 
+ form {
+   background: rgba(255, 255, 255, 0.3);
+   padding: 3em;
+   height: 500px;
+   border-radius: 20px;
+   border-left: 1px solid rgba(255, 255, 255, 0.3);
+   border-top: 1px solid rgba(255, 255, 255, 0.3);
+   backdrop-filter: blur(10px);
+   box-shadow: 20px 20px 40px -6px rgba(91, 90, 90, 0.2);
+   text-align: center;
+   position: relative;
+   transition: all 0.2s ease-in-out;
+   box-shadow: 0px 0px 17px 2px rgba(255, 255, 255, 0.8);
+
+ }
+
+ form p {
+   font-weight: 500;
+   color: #fff;
+   opacity: 1.2;
+   font-size: 2.0rem;
+   margin-top: 0;
+   margin-bottom: 60px;
+ }
+ form a {
+   text-decoration: none;
+   color: #fff;
+   font-size: 15px;
+ }
+ form a:hover {
+   color: #54a0ff;
+ }
+ form a:active {
+   text-shadow: none;
+ }
+ 
+ form input {
+   background: transparent;
+   width: 200px;
+   padding: 1em;
+   margin-bottom: 2em;
+   border: none;
+   border-left: 1px solid rgba(255, 255, 255, 0.3);
+   border-top: 1px solid rgba(255, 255, 255, 0.3);
+   border-radius: 5000px;
+   backdrop-filter: blur(5px);
+   box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+   color: #fff;
+   font-family: Montserrat, sans-serif;
+   font-weight: 500;
+   transition: all 0.2s ease-in-out;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+ }
+ form input:hover {
+   background: rgba(255, 255, 255, 0.1);
+   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+ }
+ form input[type=email]:focus, form input[type=password]:focus {
+   background: rgba(255, 255, 255, 0.1);
+   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+ }
+ form input[type=button] {
+   margin-top: 10px;
+   width: 150px;
+   font-size: 1rem;
+ }
+ form input[type=button]:hover {
+   cursor: pointer;
+ }
+ form input[type=button]:active {
+   background: rgba(255, 255, 255, 0.2);
+ }
+ form:hover {
+   margin: 4px;
+ }
+
+ ::placeholder {
+   font-family: Montserrat, sans-serif;
+   font-weight: 400;
+   color: #fff;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+ }
+
+ .drop {
+   background: rgba(255, 255, 255, 0.3);
+   backdrop-filter: blur(10px);
+   border-radius: 10px;
+   border-left: 1px solid rgba(255, 255, 255, 0.3);
+   border-top: 1px solid rgba(255, 255, 255, 0.3);
+   box-shadow: 10px 10px 60px -8px rgba(0, 0, 0, 0.2);
+   position: absolute;
+   transition: all 0.2s ease;
+ }
+ .drop-1 {
+   height: 80px;
+   width: 80px;
+   top: -20px;
+   left: -40px;
+   z-index: -1;
+ }
+ .drop-2 {
+   height: 80px;
+   width: 80px;
+   bottom: -30px;
+   left: -10px;
+ }
+ .drop-3 {
+   height: 100px;
+   width: 100px;
+   bottom: 120px;
+   right: -50px;
+   z-index: -1;
+ }
+ .drop-4 {
+   height: 120px;
+   width: 120px;
+   top: -60px;
+   right: -60px;
+ }
+
+ 
+ a,
+ input:focus,
+ select:focus,
+ textarea:focus,
+ button:focus {
+   outline: none;
+ }
+
+footer {
+   font-size: 20px;
+   bottom: 0;
+   position: fixed;
+   left: 0;
+   right: 0;
+   text-align: center;
+   z-index: 999;          
+}
+
+footer a {
+   text-decoration: none; 
+   color: #f2ebf3;         
+}
+
+footer a:hover {
+   color: #54a0ff; 
+}
+
+
