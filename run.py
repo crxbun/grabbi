@@ -1,4 +1,4 @@
-from server import flask_obj
-import server.app
+from grabbi import app
+import grabbi.server
 
-flask_obj.run(debug=True)
+app.run(debug=True)
