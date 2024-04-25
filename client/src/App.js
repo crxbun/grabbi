@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { } from 'react';
+import './App.css';
+import './styles/login.css';
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+
+import LoginPage from './pages/LoginPage';
 
 function App() {
-  const [data, setdata] = useState([{}])
-
-  // useEffect(() => {
-  //   data => {
-  //     setdata(data)
-  //   }
-  // })
   return (
-    <div>Base react app</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
