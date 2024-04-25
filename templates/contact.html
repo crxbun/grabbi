@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="Reset.css">
+    <link rel="icon" type="image/png" href="Pngtree.jpg"/>
+
+    <title>Contact Us - Grabbi</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-center {
+            text-align: center;
+            background-color: #f5f5f5;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .top-center h1 {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        .top-center img {
+            width: 40px;
+            height: 48px;
+            filter: brightness(0);
+            vertical-align: middle;
+        }
+
+        header {
+            background-color: #8ccaee;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #7ebbf4;
+            color: rgb(9, 9, 9);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-center">
+        <h1>Grabbi</h1>
+        <img src="menu.png" alt="Logo">
+    </div>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="HomePage.html">Home</a></li>
+                <li><a href="About Us.html">About Us</a></li>
+                <li><a href="TypesOfAccts.html">Services</a></li>
+            </ul>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        </nav>
+    </header>
+<br>
+<br>
+    <form method="post" action="contact_process.php">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+
+        <label for="question">Question:</label>
+        <textarea name="question" id="field" onkeyup="countChar(this)" maxlength="500" required></textarea><br>
+        <div style="text-align: right; font-size: 12px; color: gray;" id="charNum"></div>
+        <script>
+            function countChar(val) {
+                var len = val.value.length;
+                if (len >= 500) {
+                    val.value = val.value.substring(0, 500);
+                } else {
+                    var num = 500 - len;
+                    var cleft = "Remaining Characters: " + num;
+                    $('#charNum').text(cleft);
+                }
+            };
+        </script>
+        <input type="submit">
+    </form>
+
+    <footer>
+        <p style="text-align: center;">&copy; Grabbi</p>
+    </footer>
+</body>
+</html>
