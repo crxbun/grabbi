@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import styles from '../styles/login.module.css'
 
 export default function LoginPage() {
     const [username, setUsername] = useState('');
@@ -32,8 +33,6 @@ export default function LoginPage() {
             });
         }
     }
-    let imgs = ['https://as1.ftcdn.net/v2/jpg/03/39/70/90/1000_F_339709048_ZITR4wrVsOXCKdjHncdtabSNWpIhiaR7.jpg',
-    ];
 
     return (
       <html lang="en">
@@ -48,8 +47,8 @@ export default function LoginPage() {
           </head>
           <body>
               <h1>Grabbi</h1>
-              <img src="menu.png" alt="Logo" />
-              <div className="container">
+              <img src="../menu.png" alt="Logo" />
+              <div className={styles.container}>
                   <form>
                       <p>Login</p>
                       <div className="input-container">
