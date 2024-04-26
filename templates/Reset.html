@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Reset.css">
+
+
+<title>  Reset Password </title>
+
+</head>
+<body>
+  
+<div class="mainDiv">
+  <div class="top-left">
+    <h1>Grabbi</h1>
+    <img src="menu.png" alt="Logo" style="width: 40px; height: 50px; filter: brightness(0) ; vertical-align: middle;">
+  </div>
+
+    <div class="cardStyle">
+      <form action="" method="post" name="resetForm" id="resetForm">
+        <div class="text-center">
+          <h3><img src="Reset.png" alt="Key Image" style="width: 5em; height: 5em;"></h3>
+        <h2 class="formTitle">Reset your password </h2>
+        
+      <div class="inputDiv">
+        <label class="inputLabel" for="password"><b>New Password</b></label>
+        <input type="password" id="password" name="password" required a1 class onclick="myFunction1()" >
+        <div id="passwordError" style="color: red;"></div>
+
+      </div>
+        
+      <div class="inputDiv">
+        <label class="inputLabel" for="confirmPassword"><b>Confirm Password</b></label>
+        <input type="password" id="confirmPassword" name="confirmPassword"required a2 class onclick="myFunction2()" >
+        <div id="passwordError" style="color: red;"></div>
+
+      </div>
+      
+         <div class="buttonWrapper">
+      <button type="submit" id="submitButton" onclick="validateSignupForm()" class="submitButton pure-button pure-button-primary">
+        <span>Continue</span>
+        <span id="loader"></span>
+      </button>
+    </div>
+
+    </form>
+    </div>
+  </div>
+</div>
+<!--Footer-->
+  <footer>
+    <p>Go back to the <a href="HomePage.php">Homepage</a></p>
+</footer> 
+
+
+<button class="open-button" onclick="openForm()">Open Form</button>
+<div class="form-popup" id="myForm">
+
+    <form action="Login.html" class="form-container">
+  
+      <label for="User  ID"><b>User ID</b></label>
+      <input type="text" placeholder="Enter ID" name="ID" required>
+  
+      <label for="Password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="Password" required>
+  
+      <button type="submit" class="btn"><c>Login</c></button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="Reset.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
