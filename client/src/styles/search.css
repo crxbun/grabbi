@@ -1,0 +1,9 @@
+.container {
+    background: url('../styles/pho anh vu yonge-finch.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

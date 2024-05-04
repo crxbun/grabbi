@@ -1,10 +1,11 @@
-import { FaUser, FaLock } from "react-icons/fa";
 import { useState } from 'react';
-import '../styles/login.css';
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import '../styles/signup.css';
 
-function LoginPage() {
+function Signup() {
     const [formData, setFormData] = useState({
         username: '',
+        email: '',
         password: '',
     });
 
@@ -24,9 +25,9 @@ function LoginPage() {
 
     return (
         <div className="body">
-            <div className='wrapper'>
+            <div className="wrapper">
                 <form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
+                    <h1>Sign Up</h1>
                     <div className="input-box">
                         <input
                             type="text"
@@ -40,6 +41,17 @@ function LoginPage() {
                     </div>
                     <div className="input-box">
                         <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                        <FaEnvelope className="icon" />
+                    </div>
+                    <div className="input-box">
+                        <input
                             type="password"
                             name="password"
                             placeholder="Password"
@@ -49,19 +61,16 @@ function LoginPage() {
                         />
                         <FaLock className="icon" />
                     </div>
-                    <div className="forgot">
-                        <a href="#">Forgot Password?</a>
-                    </div>
 
-                    <button type="submit">Login</button>
+                    <button type="submit">Sign Up</button>
 
-                    <div className="register">
-                        <p>Don't have an account? <a href="/signup">Register</a></p>
+                    <div className="login">
+                        <p>Already have an account? <a href="/login">Login</a></p>
                     </div>
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
-export default LoginPage;
+export default Signup;
