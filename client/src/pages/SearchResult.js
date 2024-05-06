@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Search from "../components/Search";
+import { Link } from "react-router-dom";
 function SearchResult() {
 
     const [results, setResults] = useState([]);
@@ -36,10 +37,12 @@ function SearchResult() {
             <Grid className="search-cards">
                 {results && results.map((item) => (
                     <Card key={item.id}>
-                        <img src={item.image} alt={item.title} />
-                        <CardContent>
-                            <p>{item.title}</p>
-                        </CardContent>
+                        <Link to={'/recipe/' + item.id}>
+                            <img src={item.image} alt={item.title} />
+                            <CardContent>
+                                <p>{item.title}</p>
+                            </CardContent>
+                        </Link>
                     </Card>
                 ))}
             </Grid>

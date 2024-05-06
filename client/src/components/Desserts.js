@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-
+import { Link } from "react-router-dom";
 function Desserts() {
     const [desserts, setDesserts] = useState([]);
 
@@ -27,12 +27,12 @@ function Desserts() {
         } else {
             const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=8&tags=desserts`);
             if (api.ok) {
+                const data = await api.json();
                 if (data.status === "failure" && data.code === 402) {
 
                     console.log("Daily points limit reached");
                     return;
                 }
-                const data = await api.json();
                 localStorage.setItem("desserts", JSON.stringify(data.recipes));
                 setDesserts(data.recipes);
             }
@@ -54,10 +54,13 @@ function Desserts() {
                 {desserts && desserts.map((recipe) => (
                     <SplideSlide key={recipe.id}>
                         <Card>
-                            <img src={recipe.image} alt={recipe.title} />
-                            <CardContent>
-                                <p>{recipe.title}</p>
-                            </CardContent>
+                            <Link to={'/recipe/' + recipe.id}>
+
+                                <img src={recipe.image} alt={recipe.title} />
+                                <CardContent>
+                                    <p>{recipe.title}</p>
+                                </CardContent>
+                            </Link>
                         </Card>
                     </SplideSlide>
                 ))}

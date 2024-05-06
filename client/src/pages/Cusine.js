@@ -4,13 +4,15 @@ import { useParams } from "react-router-dom";
 import Category from '../components/Category';
 import '../styles/cusine.css';
 import Search from "../components/Search";
+import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
 
-
-const Grid = styled.div`
+const Grid = styled(motion.div)`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     grid-gap: 2rem; 
-    
+    margin-right:10rem;
+    margin-left:10rem;
     @media (max-width: 768px) {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     }
@@ -78,13 +80,21 @@ function Cuisine() {
             <Search />
 
             <Category className="cusine-cards" />
-            <Grid>
+            <Grid
+                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 {cuisine && cuisine.map((item) => (
                     <Card key={item.id}>
-                        <img src={item.image} alt={item.title} />
-                        <CardContent>
-                            <p>{item.title}</p>
-                        </CardContent>
+                        <Link to={'/recipe/' + item.id}>
+
+                            <img src={item.image} alt={item.title} />
+                            <CardContent>
+                                <p>{item.title}</p>
+                            </CardContent>
+                        </Link>
                     </Card>
                 ))}
             </Grid>

@@ -5,26 +5,35 @@ import Drinks from "../components/Drinks";
 import '../styles/Home.css';
 import Category from "../components/Category";
 import Search from "../components/Search";
+import { motion } from 'framer-motion';
 
 function Home() {
     return (
-        <div className="component">
-            <Search />
+        <motion.div
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            <div className="component">
+                <Search />
 
-            <Category />
-            <div className="popular">
-                <Popular />
+                <Category />
+                <div className="popular">
+                    <Popular />
+                </div>
+                <div className="veggie">
+                    <Vegetarian />
+                </div>
+                <div className="desserts">
+                    <Desserts />
+                </div>
+                <div className="drinks">
+                    <Drinks />
+                </div>
             </div>
-            <div className="veggie">
-                <Vegetarian />
-            </div>
-            <div className="desserts">
-                <Desserts />
-            </div>
-            <div className="drinks">
-                <Drinks />
-            </div>
-        </div>
+        </motion.div>
+
     );
 }
 
