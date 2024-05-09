@@ -1,0 +1,14 @@
+.veggie,
+.desserts,
+.drinks {
+    margin-top: 2rem;
+
+}
+
+.popular,
+.veggie,
+.desserts,
+.drinks {
+    margin-left: 7rem;
+    margin-right: 7rem;
+}
