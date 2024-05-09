@@ -9,23 +9,35 @@ function Recipe() {
     let params = useParams();
     const navigate = useNavigate();
 
-    const fetchDetails = async () => {
-        const storedRecipe = localStorage.getItem(`recipe_${params.name}`);
-        if (storedRecipe) {
-            setInfo(JSON.parse(storedRecipe));
-        } else {
-            const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=67815a01ce384c598e82c73974777855`);
-            const detailData = await data.json();
-            localStorage.setItem(`recipe_${params.name}`, JSON.stringify(detailData));
-            setInfo(detailData);
-        }
-    };
+    // const fetchDetails = async () => {
+    //     const storedRecipe = localStorage.getItem(`recipe_${params.name}`);
+    //     if (storedRecipe) {
+    //         setInfo(JSON.parse(storedRecipe));
+    //     } else {
+    //         const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=67815a01ce384c598e82c73974777855`);
+    //         const detailData = await data.json();
+    //         localStorage.setItem(`recipe_${params.name}`, JSON.stringify(detailData));
+    //         setInfo(detailData);
+    //     }
+    // };
 
     const goBack = () => {
         navigate(-1);
     }
 
     useEffect(() => {
+        const fetchDetails = async () => {
+            const storedRecipe = localStorage.getItem(`recipe_${params.name}`);
+            if (storedRecipe) {
+                setInfo(JSON.parse(storedRecipe));
+            } else {
+                const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=67815a01ce384c598e82c73974777855`);
+                const detailData = await data.json();
+                localStorage.setItem(`recipe_${params.name}`, JSON.stringify(detailData));
+                setInfo(detailData);
+            }
+        };
+
         fetchDetails();
     }, [params.name]);
 

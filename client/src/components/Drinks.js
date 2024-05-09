@@ -23,16 +23,16 @@ function Drinks() {
                 localStorage.removeItem('popular');
                 return;
             }
-            setDrinks(JSON.parse(check));
+            setDrinks(parsedCheck);
         } else {
             const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=8&tags=drink`);
             if (api.ok) {
+                const data = await api.json();
                 if (data.status === "failure" && data.code === 402) {
 
                     console.log("Daily points limit reached");
                     return;
                 }
-                const data = await api.json();
                 localStorage.setItem("drinks", JSON.stringify(data.recipes));
                 setDrinks(data.recipes);
             }
