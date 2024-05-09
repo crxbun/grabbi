@@ -10,7 +10,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const NavBar = () => {
+const NavBar = ({ isLoggedIn, handleLogout }) => {
+  const handleSignOut = () => {
+    handleLogout();
+  };
+
   return (
     <>
       <GlobalStyle />
@@ -28,8 +32,16 @@ const NavBar = () => {
           </NavItem>
         </Menu>
         <Auth>
-          <AuthLink to="/login">Login</AuthLink>
-          <AuthLink to="/signup">Sign Up</AuthLink>
+          {isLoggedIn ? (
+            <>
+              <AuthLink onClick={handleSignOut} to="/login">Sign Out</AuthLink>
+            </>
+          ) : (
+            <>
+              <AuthLink to="/login">Login</AuthLink>
+              <AuthLink to="/signup">Sign Up</AuthLink>
+            </>
+          )}
         </Auth>
       </Nav>
     </>
