@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
+const apiKey = '67815a01ce384c598e82c73974777855';
+
 function Vegetarian() {
     const [vegetarian, setVegetarian] = useState([]);
 
@@ -13,32 +15,28 @@ function Vegetarian() {
     }, []);
 
     const getVegetarianRecipes = async () => {
-        const check = localStorage.getItem('vegetarian');
-        if (check) {
-            let parsedCheck;
-            try {
-                parsedCheck = JSON.parse(check);
-            } catch (error) {
-                console.log("error parsing stored vegetarian recipes", error);
-                localStorage.removeItem('vegetarian');
-                return;
-            }
-            setVegetarian(JSON.parse(check));
-        } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=8&tags=vegetarian`);
+        try {
+            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=5&tags=vegetarian`);
             if (api.ok) {
                 const data = await api.json();
-
-                if (data.status === "failure" && data.code === 402) {
-
-                    console.log("Daily points limit reached");
-                    return;
-                }
                 localStorage.setItem("vegetarian", JSON.stringify(data.recipes));
                 setVegetarian(data.recipes);
+            } else {
+                console.error("Failed to fetch data from API");
+                const storedData = localStorage.getItem('vegetarian');
+                if (storedData) {
+                    setVegetarian(JSON.parse(storedData));
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data from API:", error);
+            const storedData = localStorage.getItem('vegetarian');
+            if (storedData) {
+                setVegetarian(JSON.parse(storedData));
             }
         }
     }
+
 
     return (
         <Wrapper>

@@ -50,7 +50,7 @@ function LoginPage() {
                         <FaLock className="icon" />
                     </div>
                     <div className="forgot">
-                        <a href="#">Forgot Password?</a>
+                        <a href="/reset-password">Forgot Password?</a>
                     </div>
 
                     <button type="submit">Login</button>

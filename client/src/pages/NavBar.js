@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -11,6 +11,24 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const NavBar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Call the function to check user details
+    checkUser();
+  }, []);
+
+  const checkUser = async () => {
+    // Placeholder for fetching user details
+    // For now, let's assume the user is logged in
+    setIsLoggedIn(true);
+  }
+
+  const handleSignOut = () => {
+    // Placeholder for sign-out logic
+    setIsLoggedIn(false);
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -20,16 +38,34 @@ const NavBar = () => {
           <NavItem>
             <NavLink to="/" exact>Home</NavLink>
           </NavItem>
+          {isLoggedIn && (
+            <>
+              <NavItem>
+                <NavLink to="/myfeed">My Feed</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="/manage-recipes">Manage Recipes</NavLink>
+              </NavItem>
+            </>
+
+          )}
           <NavItem>
-            <NavLink to="/myfeed">My Feed</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink to="/recipe-parser">Recipe Parser</NavLink>
+            <NavLink to="/shopping-list">Annotated Shopping List</NavLink>
           </NavItem>
         </Menu>
         <Auth>
-          <AuthLink to="/login">Login</AuthLink>
-          <AuthLink to="/signup">Sign Up</AuthLink>
+          {isLoggedIn ? (
+            <>
+              <AuthLink onClick={handleSignOut}>Sign Out</AuthLink>
+              <AuthLink to="/profile/:user-id">Profile</AuthLink>
+
+            </>
+          ) : (
+            <>
+              <AuthLink to="/login">Login</AuthLink>
+              <AuthLink to="/signup">Sign Up</AuthLink>
+            </>
+          )}
         </Auth>
       </Nav>
     </>
@@ -40,7 +76,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #1c7445  ;
+  background: #1c7445;
   padding: 20px 80px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 `;
@@ -55,13 +91,13 @@ const Logo = styled(Link)`
 const Menu = styled.ul`
   display: flex;
   align-items: center;
-  margin: 0; /* Reset default margin */
-  padding: 0; /* Reset default padding */
+  margin: 0;
+  padding: 0;
 `;
 
 const NavItem = styled.li`
   list-style: none;
-  margin: 0 20px; /* Adjust margin for spacing between items */
+  margin: 0 20px;
 `;
 
 const NavLink = styled(Link)`

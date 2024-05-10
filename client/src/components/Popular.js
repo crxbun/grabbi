@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
+const apiKey='67815a01ce384c598e82c73974777855';
+
 function Popular() {
     const [popular, setPopular] = useState([]);
 
@@ -14,31 +16,28 @@ function Popular() {
     }, []);
 
     const getPopRecipes = async () => {
-        const check = localStorage.getItem('popular');
-        if (check) {
-            let parsedCheck;
-            try {
-                parsedCheck = JSON.parse(check);
-            } catch (error) {
-                console.log("error parsing stored popular recipes", error);
-                localStorage.removeItem('popular');
-                return;
-            }
-            setPopular(JSON.parse(check));
-        } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=10`);
+        try {
+            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=6`);
             if (api.ok) {
-                if (data.status === "failure" && data.code === 402) {
-
-                    console.log("Daily points limit reached");
-                    return;
-                }
                 const data = await api.json();
                 localStorage.setItem("popular", JSON.stringify(data.recipes));
                 setPopular(data.recipes);
+            } else {
+                console.error("Failed to fetch data from API");
+                const storedData = localStorage.getItem('popular');
+                if (storedData) {
+                    setPopular(JSON.parse(storedData));
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data from API:", error);
+            const storedData = localStorage.getItem('popular');
+            if (storedData) {
+                setPopular(JSON.parse(storedData));
             }
         }
     }
+    
 
     return (
         <Wrapper>

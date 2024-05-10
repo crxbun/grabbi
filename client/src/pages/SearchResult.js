@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Search from "../components/Search";
 import { Link } from "react-router-dom";
+const  apiKey='67815a01ce384c598e82c73974777855';
+
 function SearchResult() {
 
     const [results, setResults] = useState([]);
@@ -11,7 +13,7 @@ function SearchResult() {
 
     const getSearch = async (name) => {
         const data = await fetch(
-            `https://api.spoonacular.com/recipes/complexSearch?apiKey=67815a01ce384c598e82c73974777855&query=${name}&number=10`
+            `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${name}&number=10`
         );
         const recipes = await data.json();
         setResults(recipes.results);

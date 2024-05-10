@@ -50,6 +50,7 @@ const CardContent = styled.div`
         text-align: center;
     }
 `;
+const  apiKey='67815a01ce384c598e82c73974777855';
 
 function Cuisine() {
     const [cuisine, setCuisine] = useState([]);
@@ -57,7 +58,7 @@ function Cuisine() {
 
     const getCuisine = async (name) => {
         const data = await fetch(
-            `https://api.spoonacular.com/recipes/complexSearch?apiKey=67815a01ce384c598e82c73974777855&cuisine=${name}&number=10`
+            `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&cuisine=${name}&number=10`
         );
         const recipes = await data.json();
         setCuisine(recipes.results);
