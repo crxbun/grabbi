@@ -23,9 +23,9 @@ function Vegetarian() {
                 localStorage.removeItem('vegetarian');
                 return;
             }
-            setVegetarian(JSON.parse(check));
+            setVegetarian(parsedCheck);
         } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=8&tags=vegetarian`);
+            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=416d57353a9f485aa0cd3d81bebbedf3&number=8&tags=vegetarian`);
             if (api.ok) {
                 const data = await api.json();
 

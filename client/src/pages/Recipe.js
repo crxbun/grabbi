@@ -14,7 +14,7 @@ function Recipe() {
         if (storedRecipe) {
             setInfo(JSON.parse(storedRecipe));
         } else {
-            const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=67815a01ce384c598e82c73974777855`);
+            const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=416d57353a9f485aa0cd3d81bebbedf3`);
             const detailData = await data.json();
             localStorage.setItem(`recipe_${params.name}`, JSON.stringify(detailData));
             setInfo(detailData);
@@ -27,7 +27,7 @@ function Recipe() {
 
     useEffect(() => {
         fetchDetails();
-    }, [params.name]);
+    }, [params.name, fetchDetails]);
 
     return (
         <DetailWrapper>

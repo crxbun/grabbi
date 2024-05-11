@@ -25,7 +25,7 @@ function Desserts() {
             }
             setDesserts(parsedCheck);
         } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=8&tags=desserts`);
+            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=416d57353a9f485aa0cd3d81bebbedf3&number=8&tags=desserts`);
             if (api.ok) {
                 const data = await api.json();
                 if (data.status === "failure" && data.code === 402) {

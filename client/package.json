@@ -12,7 +12,10 @@
     "framer-motion": "^11.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-flash-message": "^1.0.8",
     "react-icons": "^5.2.0",
+    "react-native-flash-message": "^0.4.2",
+    "react-native-web": "^0.19.11",
     "react-router-dom": "^6.23.0",
     "react-scripts": "^5.0.1",
     "styled-components": "^6.1.9",
@@ -41,5 +44,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "7.22.5",
+    "@babel/eslint-parser": "7.22.5",
+    "@babel/plugin-transform-private-property-in-object": "^7.24.5",
+    "@babel/preset-react": "^7.24.1"
   }
 }

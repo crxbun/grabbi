@@ -24,16 +24,16 @@ function Popular() {
                 localStorage.removeItem('popular');
                 return;
             }
-            setPopular(JSON.parse(check));
+            setPopular(parsedCheck);
         } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=67815a01ce384c598e82c73974777855&number=10`);
+            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=416d57353a9f485aa0cd3d81bebbedf3&number=10`);
             if (api.ok) {
+                const data = await api.json();
                 if (data.status === "failure" && data.code === 402) {
 
                     console.log("Daily points limit reached");
                     return;
                 }
-                const data = await api.json();
                 localStorage.setItem("popular", JSON.stringify(data.recipes));
                 setPopular(data.recipes);
             }
