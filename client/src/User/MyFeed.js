@@ -10,66 +10,98 @@ const MyFeed = () => {
     const [userRecipes, setUserRecipes] = useState([]);
     const [userBookmarks, setUserBookmarks] = useState([]);
     const [userFeed,setUserFeed]=useState([]);
-
+    
     // Simulated function to fetch user's posted recipes from backend
-    const fetchUserRecipes = () => {
+    const fetchUserRecipes = async () => {
+        try {
+            const res = await fetch('/api/user/recipes');
+            if (res.ok) {
+                const userRecipesData = await res.json();
+                return userRecipesData;
+            }
+            else {
+                alert('Failed to fetch user recipes!')
+            }
+        }
+        catch (error) {
+            console.error('Error fetching user recipes: ', error);
+            return [];
+        }
+    };
         // Simulated user recipes data for testing
         //if there aren't any, set
-        return [
-            {
-                id: 1,
-                userid: 1010,
-                title: "Spaghetti Carbonara",
-                image: "https://via.placeholder.com/250",
-                author: "John Doe",
-                readyInMinutes: 20,
-                servings: 4,
-                summary: "Classic Italian pasta dish with creamy sauce.",
-                instructions: ["1. Cook spaghetti according to package instructions...", "2...."],
-                ingredients: ["Spaghetti", "Eggs", "Bacon", "Parmesan Cheese", "Black Pepper"],
-            },
-            {
-                id: 2,
-                userid: 1010,
-                title: "Chicken Alfredo",
-                image: "https://via.placeholder.com/250",
-                author: "Jane Smith",
-                readyInMinutes: 30,
-                servings: 3,
-                summary: "Creamy pasta dish with tender chicken.",
-                instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
-                ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
-            },
-            {
-                id: 3,
-                userid: 1010,
-                title: "Chicken Alfredo",
-                image: "https://via.placeholder.com/250",
-                author: "Jane Smith",
-                readyInMinutes: 30,
-                servings: 3,
-                summary: "Creamy pasta dish with tender chicken.",
-                instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
-                ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
-            },
-            // Add more test recipes as needed
-        ];
-    }
+        // return [
+        //     {
+        //         id: 1,
+        //         userid: 1010,
+        //         title: "Spaghetti Carbonara",
+        //         image: "https://via.placeholder.com/250",
+        //         author: "John Doe",
+        //         readyInMinutes: 20,
+        //         servings: 4,
+        //         summary: "Classic Italian pasta dish with creamy sauce.",
+        //         instructions: ["1. Cook spaghetti according to package instructions...", "2...."],
+        //         ingredients: ["Spaghetti", "Eggs", "Bacon", "Parmesan Cheese", "Black Pepper"],
+        //     },
+        //     {
+        //         id: 2,
+        //         userid: 1010,
+        //         title: "Chicken Alfredo",
+        //         image: "https://via.placeholder.com/250",
+        //         author: "Jane Smith",
+        //         readyInMinutes: 30,
+        //         servings: 3,
+        //         summary: "Creamy pasta dish with tender chicken.",
+        //         instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
+        //         ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
+        //     },
+        //     {
+        //         id: 3,
+        //         userid: 1010,
+        //         title: "Chicken Alfredo",
+        //         image: "https://via.placeholder.com/250",
+        //         author: "Jane Smith",
+        //         readyInMinutes: 30,
+        //         servings: 3,
+        //         summary: "Creamy pasta dish with tender chicken.",
+        //         instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
+        //         ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
+        //     },
+        //     // Add more test recipes as needed
+        // ];
+    // };
 
-    const fetchUserBookmarks = () => {
-        // Simulated user bookmarks data for testing
-        return [
-
-            {
-                id: 716429,
-                title: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-                image: "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-
+    const fetchUserBookmarks = async() => {
+        try {
+            const res = await fetch('/api/user/bookmarks', {
+                method: 'GET'
+            });
+            if (res.ok) {
+                const userBookmarksData = await res.json();
+                return userBookmarksData;
             }
+            else {
+                alert('Failed to fetch user bookmarks!')
+                return [];
+            }
+        }
+        catch (error) {
+            console.error('Error fetching user bookmarks: ', error);
+            return [];
+        }
+        // Simulated user bookmarks data for testing
+        // return [
+
+        //     {
+        //         id: 716429,
+        //         title: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
+        //         image: "https://img.spoonacular.com/recipes/716429-556x370.jpg"
+
+        //     }
 
 
-        ]; // Initially, with some test data
-    }
+        // ]; // Initially, with some test data
+    };
 
     const fetchSimilarRecipes = async (recipeId) => {
         try {
@@ -89,10 +121,18 @@ const MyFeed = () => {
     };
 
     useEffect(() => {
-        const userRecipesData = fetchUserRecipes();
-        const userBookmarkData = fetchUserBookmarks();
-        setUserRecipes(userRecipesData);
-        setUserBookmarks(userBookmarkData);
+        const fetchData = async () => {
+            try {
+                const userRecipesData = await fetchUserRecipes();
+                const userBookmarkData = await fetchUserBookmarks();
+                setUserRecipes(userRecipesData);
+                setUserBookmarks(userBookmarkData);
+            }
+            catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        }
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -132,8 +172,8 @@ const MyFeed = () => {
                     >
                         {userRecipes.map((recipe) => (
                             <SplideSlide key={recipe.id}>
-                                <Card to={`/user-recipe/${recipe.userid}/${recipe.id}`}>
-                                    <img src={recipe.image} alt={recipe.title} />
+                                <Card to={`/user-recipe/${recipe.author}/${recipe.id}`}>
+                                    <img src={require(`../../../grabbi/custom_recipe_images/${recipe.id}.jpg`)} alt={recipe.title} />
                                     <CardContent>
                                         <p>{recipe.title}</p>
                                     </CardContent>
@@ -145,7 +185,7 @@ const MyFeed = () => {
             </Wrapper>
             <Wrapper>
                 <h3>My Bookmarked Recipes</h3>
-                {userBookmarks.length === 0 ? (
+                {userBookmarks && userBookmarks.length === 0 ? (
                     <NoRecipesText>No user bookmarks</NoRecipesText>
                 ) : (
                     <Splide

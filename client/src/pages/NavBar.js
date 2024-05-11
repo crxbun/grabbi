@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -10,24 +9,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const NavBar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Call the function to check user details
-    checkUser();
-  }, []);
-
-  const checkUser = async () => {
-    // Placeholder for fetching user details
-    // For now, let's assume the user is logged in
-    setIsLoggedIn(true);
-  }
-
+const NavBar = ({ isLoggedIn, handleLogout }) => {
   const handleSignOut = () => {
-    // Placeholder for sign-out logic
-    setIsLoggedIn(false);
-  }
+    handleLogout();
+  };
 
   return (
     <>
@@ -56,7 +41,7 @@ const NavBar = () => {
         <Auth>
           {isLoggedIn ? (
             <>
-              <AuthLink onClick={handleSignOut}>Sign Out</AuthLink>
+              <AuthLink to='/login' onClick={ handleSignOut }>Sign Out</AuthLink>
               <AuthLink to="/profile/:user-id">Profile</AuthLink>
 
             </>

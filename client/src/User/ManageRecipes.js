@@ -1,60 +1,91 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { getImageDataUri, displayImage } from "../utils/ImageUtils";
 
 function ManageRecipes() {
     const [userRecipes, setUserRecipes] = useState([]);
 
-    useEffect(() => {
-        // Simulated function to fetch user's posted recipes from backend
-        const userRecipesData = fetchUserRecipes(); // Replace with your actual logic to fetch user recipes
-        setUserRecipes(userRecipesData);
-    }, []);
+    // useEffect(() => {
+    //     // Simulated function to fetch user's posted recipes from backend
+    //     const userRecipesData = fetchUserRecipes(); // Replace with your actual logic to fetch user recipes
+    //     setUserRecipes(userRecipesData);
+    // }, []);
 
     //DB/BACKEND NEEDED HERE
-    const fetchUserRecipes = () => {
-        // Simulated user recipes data for testing
+    const fetchUserRecipes = async () => {
+        try {
+            const res = await fetch('/api/user/recipes');
+            if (res.ok) {
+                const userRecipesData = await res.json();
+                return userRecipesData;
+            }
+            else {
+                alert('Failed to fetch user recipes!')
+            }
+        }
+        catch (error) {
+            console.error('Error fetching user recipes: ', error);
+            return [];
+        }
+    };
 
-        //based on userinformation, fetch the user recipes 
-        return [
-            {
-                id: 1,
-                userid: 1010,
-                title: "Spaghetti Carbonara",
-                image: "https://via.placeholder.com/250",
-                author: "John Doe",
-                readyInMinutes: 20,
-                servings: 4,
-                summary: "Classic Italian pasta dish with creamy sauce.",
-                instructions: ["1. Cook spaghetti according to package instructions...", "2...."],
-                ingredients: ["Spaghetti", "Eggs", "Bacon", "Parmesan Cheese", "Black Pepper"],
-            },
-            {
-                id: 2,
-                userid: 1010,
-                title: "Chicken Alfredo",
-                image: "https://via.placeholder.com/250",
-                author: "Jane Smith",
-                readyInMinutes: 30,
-                servings: 3,
-                summary: "Creamy pasta dish with tender chicken.",
-                instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
-                ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
-            }, {
-                id: 3,
-                userid: 1010,
-                title: "Chicken Alfredo",
-                image: "https://via.placeholder.com/250",
-                author: "Jane Smith",
-                readyInMinutes: 30,
-                servings: 3,
-                summary: "Creamy pasta dish with tender chicken.",
-                instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
-                ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
-            },
-            // Add more test recipes as needed
-        ];
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userRecipesData = await fetchUserRecipes();
+                setUserRecipes(userRecipesData);
+            }
+            catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        }
+        fetchData();
+    }, []);
+
+    // const fetchUserRecipes = () => {
+    //     // Simulated user recipes data for testing
+
+    //     //based on userinformation, fetch the user recipes 
+    //     return [
+    //         {
+    //             id: 1,
+    //             userid: 1010,
+    //             title: "Spaghetti Carbonara",
+    //             image: "https://via.placeholder.com/250",
+    //             author: "John Doe",
+    //             readyInMinutes: 20,
+    //             servings: 4,
+    //             summary: "Classic Italian pasta dish with creamy sauce.",
+    //             instructions: ["1. Cook spaghetti according to package instructions...", "2...."],
+    //             ingredients: ["Spaghetti", "Eggs", "Bacon", "Parmesan Cheese", "Black Pepper"],
+    //         },
+    //         {
+    //             id: 2,
+    //             userid: 1010,
+    //             title: "Chicken Alfredo",
+    //             image: "https://via.placeholder.com/250",
+    //             author: "Jane Smith",
+    //             readyInMinutes: 30,
+    //             servings: 3,
+    //             summary: "Creamy pasta dish with tender chicken.",
+    //             instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
+    //             ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
+    //         }, {
+    //             id: 3,
+    //             userid: 1010,
+    //             title: "Chicken Alfredo",
+    //             image: "https://via.placeholder.com/250",
+    //             author: "Jane Smith",
+    //             readyInMinutes: 30,
+    //             servings: 3,
+    //             summary: "Creamy pasta dish with tender chicken.",
+    //             instructions: ["1. Cook fettuccine according to package instructions...", "2..."],
+    //             ingredients: ["Fettuccine", "Chicken Breast", "Heavy Cream", "Parmesan Cheese", "Garlic"],
+    //         },
+    //         // Add more test recipes as needed
+    //     ];
+    // }
 
     const handleDeleteRecipe = (id, userid) => {
         // Logic to delete the recipe with the given recipe id
@@ -79,8 +110,8 @@ function ManageRecipes() {
 
                 {userRecipes && userRecipes.map((recipe) => (
                     <RecipeContainer key={recipe.id}>
-                        <RecipeCard to={`/user-recipe/${recipe.userid}/${recipe.id}`}>
-                            <img src={recipe.image} alt={recipe.title} />
+                        <RecipeCard to={`/user-recipe/${recipe.author}/${recipe.id}`}>
+                            <img src={require(`../../../grabbi/custom_recipe_images/${recipe.id}.jpg`)} alt={recipe.title} />
                             <CardContent>
                                 <p>{recipe.title}</p>
                             </CardContent>

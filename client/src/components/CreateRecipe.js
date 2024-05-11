@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from 'axios';
 
 const CreateRecipe = () => {
+    const [fileToBeSent, setFileToBeSent] = useState(null);
+
+    const handleFileChange = (e) => {
+        setFileToBeSent(e.target.files[0]);
+    };
 
     const generateUniqueID = () => {
         let newID
@@ -51,15 +57,48 @@ const CreateRecipe = () => {
         return { userid: 1010 }; // Sample user info with userid
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            // Send recipeData to backend or perform further actions
-            console.log(recipeData); 
-            //console is correctly printing format of recipeData with the testValues from ManageRecipe
+            try {
+                const formData = new FormData();
+                formData.append("title", recipeData.title);
+                formData.append("author", recipeData.author);
+                formData.append("image", fileToBeSent);
+                formData.append("instructions", JSON.stringify(recipeData.instructions));
+                formData.append("ingredients", JSON.stringify(recipeData.ingredients));
+                formData.append("recipe_id", recipeData.id);
+                formData.append("readyInMinutes", recipeData.readyInMinutes);
+                formData.append("summary", recipeData.summary);
+                formData.append("servings", recipeData.servings);
 
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                };
 
-        } else {
+                const res = await axios.post('/create_recipe', formData, config);
+
+                if (res.status === 201) {
+                    alert('Recipe created successfully!');
+                }
+                else if (res.status === 409) {
+                    setRecipeData(prevRecipeData => ({
+                        ...prevRecipeData,
+                        id: generateUniqueID()
+                    }))
+                    handleSubmit(e);
+                }
+                else {
+                    alert('There was an issue processing the recipe creation. Please try again.');
+                }
+            }
+            catch (error) {
+                console.error('Error: ', error);
+            }
+        }
+        else {
             alert("Please fill out all fields.");
         }
     };
@@ -77,12 +116,19 @@ const CreateRecipe = () => {
         } else if (type === "image") {
             const allowedTypes = ["image/jpeg", "image/png"]; // Allowed image types
             const file = files[0];
+            const reader = new FileReader();
+
             if (file && allowedTypes.includes(file.type)) {
-                setRecipeData({
-                    ...recipeData,
-                    image: file, // Update image with the uploaded file
-                });
-            } else {
+                reader.onload = () => {
+                    const base64String = reader.result;
+                    setRecipeData({
+                        ...recipeData,
+                        image: base64String,
+                    });
+                };
+                reader.readAsDataURL(file);
+            } 
+            else {
                 alert("Please upload a valid image file (jpg, png).");
             }
         } else {
@@ -148,7 +194,7 @@ const CreateRecipe = () => {
                         type="file"
                         name="image"
                         accept="image/png, image/jpeg"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleFileChange}
 
                     />
                 </FormGroup>

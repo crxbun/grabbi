@@ -164,6 +164,41 @@ function Recipe() {
     };
 
     const handleBookmark = async (id,title,image) => {
+        setIsBookmarked(!isBookmarked);
+        try {
+            if (isBookmarked) {
+                const res = await fetch(`/api/user/bookmarks/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+                if (res.ok) {
+                    alert('Recipe unbookmarked successfully.');
+                }
+                else {
+                    alert('Failed to unbookmark recipe.');
+                }
+            }
+            else {
+                const res = await fetch(`/api/user/bookmarks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id, title, image}),
+                });
+                if (res.ok) {
+                    alert('Recipe bookmarked successfully!');
+                }
+                else {
+                    alert('Failed to bookmark recipe.');
+                }
+            }
+        }
+        catch (error) {
+            console.error('Error bookmarking/unbookmarking recipe: ', error);
+        }
         /*
         save the bookmark in the following format in db
 
@@ -178,25 +213,25 @@ function Recipe() {
             ...
          ]
         */
-        setIsBookmarked(!isBookmarked); //flips state of bookmark based on user click
-         //backend stuff 
-        if (isBookmarked) {
-            // If already bookmarked, remove from backend
-            try {
-                // Placeholder for backend action to remove bookmarked recipe
-                alert('Recipe unbookmarked');
-            } catch (error) {
-                console.error("Failed to unbookmark recipe: ", error);
-            }
-        } else {
-            // If not bookmarked, add to backend
-            try {
-                // Placeholder for backend action to add bookmarked recipe
-                alert('Recipe bookmarked');
-            } catch (error) {
-                console.error("Failed to bookmark recipe: ", error);
-            }
-        }
+        // setIsBookmarked(!isBookmarked); //flips state of bookmark based on user click
+        //  //backend stuff 
+        // if (isBookmarked) {
+        //     // If already bookmarked, remove from backend
+        //     try {
+        //         // Placeholder for backend action to remove bookmarked recipe
+        //         alert('Recipe unbookmarked');
+        //     } catch (error) {
+        //         console.error("Failed to unbookmark recipe: ", error);
+        //     }
+        // } else {
+        //     // If not bookmarked, add to backend
+        //     try {
+        //         // Placeholder for backend action to add bookmarked recipe
+        //         alert('Recipe bookmarked');
+        //     } catch (error) {
+        //         console.error("Failed to bookmark recipe: ", error);
+        //     }
+        // }
     };
 
     const copyUrlToClipboard1 = () => {

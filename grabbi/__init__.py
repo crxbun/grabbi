@@ -16,7 +16,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(app, model_class=Base)
 
 # from grabbi_app.models import all DB MODELS HERE
-from grabbi.models import User, Recipe
+from grabbi.models import User, Recipe, Bookmark
 
 with app.app_context():
     db.create_all()

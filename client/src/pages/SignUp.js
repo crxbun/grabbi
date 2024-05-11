@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import '../styles/signup.css';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -17,10 +20,38 @@ function Signup() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
-        console.log(formData);
+        
+        try {
+            const res = await fetch('api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert('Signup successful! Redirecting ...');
+                console.log('Signup successful! Redirecting ...');
+                navigate('/login')
+            }
+            else {
+                if (res.status === 403 && data.error === "User already exists!") {
+                    alert('A user already exists with this username. Please enter a new username and try again.');
+                }
+                else {
+                    console.error('Signup failed! Please try again.');
+                    alert('Signup failed! Please try again.');
+                }
+            }
+        }
+        catch (error) {
+            console.error('Error: ', error);
+        }
     };
 
     return (

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useNavigate ,useParams} from "react-router-dom";
 
 
-
 const UserRecipe = () => {
     const [recipe, setRecipe] = useState(null);
     const [activeTab, setActiveTab] = useState('instructions');
@@ -12,19 +11,33 @@ const UserRecipe = () => {
 
     useEffect(() => {
         // Simulated function to fetch recipe details from backend using userId and recipeId
-        fetchRecipeDetails(userId, recipeId)
-            .then((recipeData) => {
-                setRecipe(recipeData);
-            })
-            .catch((error) => {
-                console.error("Error fetching recipe details:", error);
-            });
+        const fetchRecipeDetails = async () => {
+            try {
+                const res = await fetch(`/user-recipe/${userId}/${recipeId}`);
+                if (res.ok) {
+                    const recipeData = await res.json();
+                    recipeData.instructions = JSON.parse(recipeData.instructions);
+                    recipeData.ingredients = JSON.parse(recipeData.ingredients);
+                    setRecipe(recipeData);
+                    alert(recipe.image)
+                }
+                else {
+                    alert('Failed to fetch recipe details!')
+                }
+            }
+            catch (error) {
+                console.error('Error fetching recipe details: ', error);
+            }
+        };
+
+        fetchRecipeDetails();
     }, [userId, recipeId]);
 
 
 
-    const fetchRecipeDetails = async (userId, recipeId) => {
-        console.log(userId+","+recipeId);
+    // const fetchRecipeDetails = async (userId, recipeId) => {
+    //     console.log(userId+","+recipeId);
+        
         /*
 
         Based on userID and recipeID, fetch the user recipe details from db. 
@@ -34,19 +47,19 @@ const UserRecipe = () => {
         // You should replace this with your actual backend 
         // This function should return the recipe details for the given userId and recipeId
         // For demonstration purposes, I'll just return a static recipe object
-        return {
-            id: recipeId,
-            userid: userId,
-            title: "Spaghetti Carbonara",
-            image: "https://via.placeholder.com/250",
-            author: "John Doe",
-            readyInMinutes: 20,
-            servings: 4,
-            summary: "Classic Italian pasta dish with creamy sauce.",
-            instructions: ["1. Cook spaghetti according to package instructions...", "2...."],
-            ingredients: ["Spaghetti", "Eggs", "Bacon", "Parmesan Cheese", "Black Pepper"],
-        };
-    };
+        // return {
+        //     id: recipeId,
+        //     userid: userId,
+        //     title: "Spaghetti Carbonara",
+        //     image: "https://via.placeholder.com/250",
+        //     author: "John Doe",
+        //     readyInMinutes: 20,
+        //     servings: 4,
+        //     summary: "Classic Italian pasta dish with creamy sauce.",
+        //     instructions: ["1. Cook spaghetti according to package instructions...", "2...."],
+        //     ingredients: ["Spaghetti", "Eggs", "Bacon", "Parmesan Cheese", "Black Pepper"],
+        // };
+    // };
 
     const redirectToShoppingList = () => {
         // Redirect to Recommendation page with ingredients pre-filled
@@ -70,7 +83,7 @@ const UserRecipe = () => {
                 <TitleWrapper>
                     <h2>{recipe.title}</h2>
                 </TitleWrapper>
-                <RoundedImage src={recipe.image} alt={recipe.title} />
+                <RoundedImage src={ require(`../../../grabbi/custom_recipe_images/${recipe.id}.jpg`) } alt={recipe.title} />
                 <h3><strong>Author: </strong>{recipe.author}</h3>
                 <h3>
                     <strong>Ready in: </strong>{recipe.readyInMinutes} minutes & <strong>Serves for:</strong> {recipe.servings}
@@ -97,7 +110,7 @@ const UserRecipe = () => {
                             <h3>Instructions:</h3>
                             <ol>
                                 {recipe.instructions.map((instruction, index) => (
-                                    <li key={index}>{instruction}</li>
+                                    <li key={index}>{instruction.step}</li>
                                 ))}
                             </ol>
                         </div>
@@ -109,7 +122,7 @@ const UserRecipe = () => {
                             <h3>Ingredients:</h3>
                             <ul>
                                 {recipe.ingredients.map((ingredient, index) => (
-                                    <li key={index}>{ingredient}</li>
+                                    <li key={index}>{ingredient.name}</li>
                                 ))}
                             </ul>
                         </div>
