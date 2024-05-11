@@ -1,8 +1,11 @@
 import { FaUser, FaLock } from "react-icons/fa";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 
-function LoginPage() {
+function LoginPage({ onLogin }) {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -16,11 +19,33 @@ function LoginPage() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission
-        console.log(formData);
+        try {
+            const res = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (res.ok) {
+                console.log('Login was successful!');
+                onLogin();
+                navigate('/myfeed')
+            }
+            else {
+                console.error('Login failed! Please check your credentials to ensure they are correct.');
+            }
+        }
+        catch (error) {
+            console.error('Error: ', error);
+        }
+        // console.log(formData);
     };
+
+    const isLoggedIn = !!localStorage.getItem('token');
 
     return (
         <div className="body">

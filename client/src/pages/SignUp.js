@@ -17,10 +17,28 @@ function Signup() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const res = await fetch('api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (res.ok) {
+                console.log('Signup successful! Redirecting...');
+            }
+            else {
+                console.error('Signup failed! Please try again.');
+            }
+        }
+        catch (error) {
+            console.error('Error: ', error);
+        }
         // Handle form submission
-        console.log(formData);
+        // console.log(formData);
     };
 
     return (
