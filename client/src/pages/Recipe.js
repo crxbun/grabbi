@@ -181,7 +181,7 @@ function Recipe() {
                 }
             }
             else {
-                const res = await fetch(`/api/user/bookmarks`, {
+                const res = await fetch(`/api/user/bookmarks/add`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

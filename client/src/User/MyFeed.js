@@ -74,11 +74,15 @@ const MyFeed = () => {
     const fetchUserBookmarks = async() => {
         try {
             const res = await fetch('/api/user/bookmarks', {
-                method: 'GET'
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
             });
             if (res.ok) {
-                const userBookmarksData = await res.json();
-                return userBookmarksData;
+                const data = await res.json();
+                return data.bookmarks;
             }
             else {
                 alert('Failed to fetch user bookmarks!')
@@ -124,8 +128,9 @@ const MyFeed = () => {
         const fetchData = async () => {
             try {
                 const userRecipesData = await fetchUserRecipes();
-                const userBookmarkData = await fetchUserBookmarks();
                 setUserRecipes(userRecipesData);
+                
+                const userBookmarkData = await fetchUserBookmarks();
                 setUserBookmarks(userBookmarkData);
             }
             catch (error) {
@@ -185,7 +190,7 @@ const MyFeed = () => {
             </Wrapper>
             <Wrapper>
                 <h3>My Bookmarked Recipes</h3>
-                {userBookmarks && userBookmarks.length === 0 ? (
+                {userBookmarks.length === 0 ? (
                     <NoRecipesText>No user bookmarks</NoRecipesText>
                 ) : (
                     <Splide

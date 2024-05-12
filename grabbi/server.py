@@ -166,36 +166,71 @@ def get_recipe_details(userId, recipeId):
         print(e)
         return jsonify({'error': 'Internal server error'}), 500
     
-@app.route('/api/user/bookmarks', methods=['POST', 'GET'])
+@app.route('/api/user/bookmarks', methods=['GET'])
+def get_user_bookmarks():
+    if 'id' not in login_session:
+        return jsonify({'error': 'User not logged in!'}), 401
+    
+    bookmarks = Bookmark.query.filter_by(user_id = login_session['id']).all()
+
+    bookmarks_json = []
+
+    for bookmark in bookmarks:
+        recipe = db.session.execute(db.select(Recipe).where(Recipe.id == bookmark.recipe_id).where(Recipe.author == bookmark.user_id)).first()
+
+        if recipe:
+            bookmark_data = {
+                'id': recipe.id,
+                'title': recipe.title,
+                'image': recipe.image
+            }
+            bookmarks_json.append(bookmark_data)
+
+        return jsonify({'bookmarks': bookmarks_json})
+
+    # for bookmark in bookmarks:
+    #     print("Bookmark ID:", bookmark.id)
+    #     print("User ID:", bookmark.user_id)
+    #     print("Recipe ID:", bookmark.recipe_id)
+    #     # Rest of the code to handle valid recipe
+
+
+    # for bookmark in bookmarks:
+    #     recipe = db.session.execute(db.select(Recipe).where(Recipe.id == bookmark.recipe_id).where(Recipe.author == login_session['id'])).scalar()
+    #     print (recipe.id)
+    #     if recipe:
+    #         bookmark_data = {
+    #             'id': recipe.id,
+    #             'title': recipe.title,
+    #             'image': recipe.image
+    #         }
+    #         bookmarks_json.append(bookmark_data)
+    
+    # return jsonify({'bookmarks': bookmarks_json})
+    # bookmarks_json = [
+    #     {
+    #         'id': bookmark.recipe_id,
+    #         'title': db.session.execute(db.select(Recipe.title).where(Recipe.id == bookmark.recipe_id)).scalar(),
+    #         'image': db.session.execute(db.select(Recipe.image).where(Recipe.id == bookmark.recipe_id)).scalar()
+    #     }
+    #     for bookmark in bookmarks
+    # ]
+    # return jsonify(bookmarks_json)
+
+@app.route('/api/user/bookmarks/add', methods=['POST'])
 def add_bookmark():
     data = request.json
     recipe_id = data.get('id')
 
-    if request.method == 'POST':
-        # title = data.get('title')
-        # image = data.get('image')
+    new_bookmark = Bookmark(
+        recipe_id=recipe_id,
+        user_id=login_session['id']
+    )
 
-        new_bookmark = Bookmark(
-            recipe_id=recipe_id,
-            user_id=login_session['id']
-        )
+    db.session.add(new_bookmark)
+    db.session.commit()
 
-        db.session.add(new_bookmark)
-        db.session.commit()
-
-        return jsonify({'success': True}), 200
-    
-    if request.method == 'GET':
-        bookmarks = Bookmark.query.filter_by(user_id = login_session['id']).all()
-        bookmarks_json = [
-            {
-                'id': bookmark.recipe_id,
-                'title': db.session.execute(db.select(Recipe.title).where(Recipe.id == bookmark.recipe_id)).scalar(),
-                'image': db.session.execute(db.select(Recipe.image).where(Recipe.id == bookmark.recipe_id)).scalar()
-            }
-            for bookmark in bookmarks
-        ]
-        return jsonify(bookmarks_json)
+    return jsonify({'success': True}), 200
 
 @app.route('/api/user/bookmarks/<int:recipe_id>', methods=['DELETE'])
 def remove_bookmark(recipe_id):
